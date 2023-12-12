@@ -1,8 +1,10 @@
-# Docker Compose
+# Docker - Spring boot
+
+## Docker Compose
 * https://seosh817.tistory.com/387
 * [복잡한 로컬 구성](https://dev.gmarket.com/72)
 
-## MaraiDB
+### MaraiDB
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
 * 볼륨 생성: docker desktop > Volumes > Create > MariaDB_Volumn
 
@@ -41,4 +43,26 @@ cd docker-compose/MariaDB
 docker-compose up -d
 mysql -u root -p -P 43306
 docker exec -it con_mariadb /bin/bash
+```
+
+## Spring boot
+Dockerfile
+```Dockerfile
+FROM adoptopenjdk/openjdk11
+CMD ["./mvnw", "clean", "package"]
+ARG JAR_FILE_PATH=target/*.jar
+COPY ${JAR_FILE_PATH} app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+EXPOSE 8080 
+```
+* `./mvnw` 실행시 `JAVA_HOME` 필요
+* EXPOSE = 8080 포트 오픈
+
+```sh
+# 로컬 이미지 생성
+docker build -t docker-spring-test:0.0.1 .
+
+# 컨테이너 생성
+docker create --name con_spring -P docker-spring-test:0.0.1
+## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
 ```
