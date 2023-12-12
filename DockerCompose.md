@@ -1,4 +1,6 @@
 # Docker Compose
+* https://seosh817.tistory.com/387
+* [복잡한 로컬 구성](https://dev.gmarket.com/72)
 
 ## MaraiDB
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
