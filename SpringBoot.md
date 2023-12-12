@@ -61,6 +61,7 @@ EXPOSE 8080 
 ```sh
 # 로컬 이미지 생성
 docker build -t image-spring-test:0.0.1 .
+## -t = 이름:버전 형식
 ## 마지막에 . 꼭 붙여야 한다.
 
 # 컨테이너 생성
