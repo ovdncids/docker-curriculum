@@ -46,6 +46,8 @@ docker exec -it con_mariadb /bin/bash
 ```
 
 ## Spring boot
+* https://umanking.github.io/2021/07/11/spring-boot-docker-starter
+
 Dockerfile
 ```Dockerfile
 FROM adoptopenjdk/openjdk11
