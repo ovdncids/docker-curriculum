@@ -1,6 +1,7 @@
 # Docker Compose
 
 ## MaraiDB
+* https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D
 * 볼륨 생성: docker desktop > Volumes > Create > MariaDB_Volumn
 
 docker-compose/MariaDB/docker-compose.yml
