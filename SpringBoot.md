@@ -6,21 +6,21 @@
 
 ### MaraiDB
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
-* 볼륨 생성: docker desktop > Volumes > Create > MariaDB_Volumn
+* 볼륨 생성: docker desktop > Volumes > Create > mariadb_volume
 
-docker-compose/MariaDB/docker-compose.yml
+docker-composes/mariadb/docker-compose.yml
 ```yml
 version: "3.9"
 
 volumes:
-  MariaDB_Volumn:
+  mariadb_volume:
     external: true
-    name: MariaDB_Volumn
+    name: mariadb_volume
 
 services:
-  db:
+  mariadb_service:
     image: mariadb
-    container_name: con_mariadb
+    container_name: mariadb_container
     ports:
       - "43306:3306"
     environment:
@@ -35,14 +35,14 @@ services:
       - --collation-server=utf8mb4_unicode_ci
       - --skip-character-set-client-handshake
     volumes:
-      - MariaDB_Volumn:/var/lib/mysql
+      - mariadb_volume:/var/lib/mysql
 ```
 
 ```sh
-cd docker-compose/MariaDB
+cd docker-composes/mariadb
 docker-compose up -d
 mysql -u root -p -P 43306
-docker exec -it con_mariadb /bin/bash
+docker exec -it mariadb_container /bin/bash
 ```
 
 ## Spring boot
@@ -63,10 +63,10 @@ EXPOSE 8080 
 
 ```sh
 # 로컬 이미지 생성
-docker build -t image-spring-test:0.0.1 ./
+docker build -t spring-image:0.0.1 ./
 ## -t = 이름:버전 형식
 
 # 컨테이너 생성
-docker create --name con_spring -P image-spring-test:0.0.1
+docker create --name spring_container -P spring-image:0.0.1
 ## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
 ```
