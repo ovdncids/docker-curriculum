@@ -45,7 +45,7 @@ mysql -u root -p -P 43306
 docker exec -it mariadb_container /bin/bash
 ```
 
-## Spring boot
+## Spring Boot
 * https://umanking.github.io/2021/07/11/spring-boot-docker-starter
 
 Dockerfile
