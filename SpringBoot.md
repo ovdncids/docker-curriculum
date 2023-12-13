@@ -63,10 +63,10 @@ EXPOSE 8080 
 
 ```sh
 # 로컬 이미지 생성
-docker build -t spring-image:0.0.1 ./
+docker build -t spring_image:0.0.1 ./
 ## -t = 이름:버전 형식
 
 # 컨테이너 생성
-docker create --name spring_container -P spring-image:0.0.1
+docker create --name spring_container -P spring_image:0.0.1
 ## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
 ```
