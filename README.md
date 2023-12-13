@@ -52,7 +52,7 @@ docker rm httpd1
 # 호스트와 컨테이너 사이에 포트 포워딩 하는 httpd2 컨테이너 생성
 docker run --name httpd2 -p 8880:80 httpd
 
-# 호스트와 컨테이너 사아에 포트 포워딩과 파일 연결 하는 httpd2 컨테이너 생성
+# 호스트와 컨테이너 사아에 포트 포워딩과 파일 연결 하는 httpd3 컨테이너 생성
 docker run --name httpd3 -p 8880:80 -v {호스트 경로}:/usr/local/apache2/htdocs httpd
 ## run = create, start, attach 또는 exec 한번에 실행
 ```
@@ -94,17 +94,17 @@ open --background -a Docker
 docker pull ubuntu:latest
 
 # 컨테이너 생성
-docker create -it --name con_ubuntu -p 33000:3000 -p 33306:3306 -p 38080:8080 ubuntu
+docker create -it --name ubuntu_container -p 33000:3000 -p 33306:3306 -p 38080:8080 ubuntu
 ## -it = 컨테이너 내부로 진입 (attach 가능, i = 상호 입출력, t = tty를 활성화하여 bash 쉘을 사용)
-### -it 옵션을 설정 하지 않으면 `docker start con_ubuntu` 후에 자동 종료 된다.
+### -it 옵션을 설정 하지 않으면 `docker start ubuntu_container` 후에 자동 종료 된다.
 ## -d = 데몬 서비스 (detached 모드, exec으로 터미널 가능)
 ## -p = 포트 바인딩
 
 # 컨테이너 실행
-docker start con_ubuntu
+docker start ubuntu_container
 
 # 컨테이너 Shell 접속 (root로 접속됨)
-docker attach con_ubuntu
+docker attach ubuntu_container
 ```
 
 ### Shell 접속
@@ -125,7 +125,7 @@ sudo passwd root
 sudo usermod -aG sudo [사용자]
 # 해당 사용자로 로그인
 su - [사용자]
-## 이제 `docker exec -it -u [사용자] con_ubuntu /bin/bash` 접속도 가능하다.
+## 이제 `docker exec -it -u [사용자] ubuntu_container /bin/bash` 접속도 가능하다.
 
 # 네트워크 설치
 sudo apt install net-tools
@@ -153,7 +153,7 @@ C:\Users\[사용자]\AppData\Local\Docker\wsl\data\ext4.vhdx
 docker info
 ## Docker Root Dir: /var/lib/docker
 ## 해당 경로를 ubuntu에서 접근해야 한다.
-docker inspect con_ubuntu
+docker inspect ubuntu_container
 ## 설정 정보를 확인
 docker run -v/:/data -it --name docker_ubuntu ubuntu /bin/bash
 ## -v = 볼륨, /:/data = `Docker Root Dir`에 접근 가능하게 해준다.
