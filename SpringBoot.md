@@ -25,9 +25,9 @@ services:
       - "43306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=dockerDB
-      - MYSQL_USER=dockerUSER
-      - MYSQL_PASSWORD=dockerPASSWORD
+      - MYSQL_DATABASE=docker_database
+      - MYSQL_USER=docker_user
+      - MYSQL_PASSWORD=docker_password
       - TZ=Asia/Seoul
     command:
       - --default-authentication-plugin=mysql_native_password
