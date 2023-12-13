@@ -21,7 +21,7 @@ services:
   db:
     image: mariadb
     container_name: con_mariadb
-    ports: 
+    ports:
       - "43306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -29,7 +29,7 @@ services:
       - MYSQL_USER=dockerUSER
       - MYSQL_PASSWORD=dockerPASSWORD
       - TZ=Asia/Seoul
-    command: 
+    command:
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
