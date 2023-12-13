@@ -55,18 +55,26 @@ CMD ["./mvnw", "clean", "package"]
 # CMD ["./gradle", "clean", "build", "bootJar"]
 ARG JAR_FILE_PATH=target/*.jar
 COPY ${JAR_FILE_PATH} app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
-EXPOSE 8080 
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"]
+EXPOSE 8080
 ```
 * `./mvnw` 실행시 `JAVA_HOME` 필요
 * EXPOSE = 8080 포트 오픈
 
 ```sh
 # 로컬 이미지 생성
-docker build -t spring_image:0.0.1 ./
+docker build --no-cache -t spring_image:0.0.1 ./
+## --no-cache = 빌드를 캐시에 넣지 않는다.
 ## -t = 이름:버전 형식
 
 # 컨테이너 생성
 docker create --name spring_container -P spring_image:0.0.1
 ## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
 ```
+
+```sh
+docker network ls
+```
+
+### Error response from daemon: pull access denied for spring_image
+* `docker-compose.yml` 파일에서 `spring_image:0.0.1` 버전이 도커 데스크톱과 같은지 확인
