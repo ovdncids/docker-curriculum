@@ -47,6 +47,7 @@ docker exec -it mariadb_container /bin/bash
 
 ## Spring Boot
 * https://umanking.github.io/2021/07/11/spring-boot-docker-starter
+* [CMD vs ENTRYPOINT](https://velog.io/@dachae/Docker-5-Dockerfile-%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD)
 
 Dockerfile
 ```Dockerfile
@@ -54,11 +55,11 @@ FROM adoptopenjdk/openjdk11
 
 # Maven으로 .jar 파일을 로컬에서 우선 생성해야함
 # ./mvnw clean package
-ARG JAR_FILE_PATH=target/*.jar
+ARG JAR_FILE_PATH=target/*-SNAPSHOT.jar
 
 # Gradle으로 .jar 파일을 로컬에서 우선 생성해야함
 # ./gradlew clean build
-ARG JAR_FILE_PATH=build/libs/*.jar
+ARG JAR_FILE_PATH=build/libs/*-SNAPSHOT.jar
 
 COPY ${JAR_FILE_PATH} app.jar
 ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"]
@@ -79,9 +80,37 @@ docker create --name spring_container -P spring_image:0.0.1
 ## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
 ```
 
+### Error response from daemon: pull access denied for spring_image
+* `docker-compose.yml` 파일에서 `spring_image:0.0.1` 버전이 도커 데스크톱과 같은지 확인
+
+## MaraiDB와 Spring Boot 연결
 ```sh
 docker network ls
 ```
 
-### Error response from daemon: pull access denied for spring_image
-* `docker-compose.yml` 파일에서 `spring_image:0.0.1` 버전이 도커 데스크톱과 같은지 확인
+docker-composes/mariadb/docker-compose.yml
+```yml
+networks:
+  maria_network:
+    driver: bridge
+
+services:
+  mariadb_service:
+    networks:
+      - maria_network
+
+  spring_service:
+    image: spring_image:0.0.1
+    container_name: spring_container
+    ports:
+      - "48080:8080"
+    networks:
+      - maria_network
+```
+* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `서비스 이름`으로 연결 가능하다.
+
+src/main/resources/application-production.properties
+```properties
+spring.datasource.url=jdbc:mysql://mariadb_service:3306/docker_database
+```
+* IP를 컴포즈의 서비스 이름으로 맞춘다.
