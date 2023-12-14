@@ -8,7 +8,7 @@
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
 * 볼륨 생성: docker desktop > Volumes > Create > mariadb_volume
 
-docker-composes/mariadb/docker-compose.yml
+docker-composes/{프로젝트}/docker-compose.yml
 ```yml
 version: "3.9"
 
@@ -88,7 +88,7 @@ docker create --name spring_container -P spring_image:0.0.1
 docker network ls
 ```
 
-docker-composes/mariadb/docker-compose.yml
+docker-composes/{프로젝트}/docker-compose.yml
 ```yml
 networks:
   maria_network:
