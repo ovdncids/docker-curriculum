@@ -51,19 +51,26 @@ docker exec -it mariadb_container /bin/bash
 Dockerfile
 ```Dockerfile
 FROM adoptopenjdk/openjdk11
-CMD ["./mvnw", "clean", "package"]
-# CMD ["./gradle", "clean", "build", "bootJar"]
+
+# Maven으로 .jar 파일을 로컬에서 우선 생성해야함
+# ./mvnw clean package
 ARG JAR_FILE_PATH=target/*.jar
+
+# Gradle으로 .jar 파일을 로컬에서 우선 생성해야함
+# ./gradlew clean build
+ARG JAR_FILE_PATH=build/libs/*.jar
+
 COPY ${JAR_FILE_PATH} app.jar
 ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"]
 EXPOSE 8080
 ```
-* `./mvnw` 실행시 `JAVA_HOME` 필요
-* EXPOSE = 8080 포트 오픈
+* `./mvnw` 또는 `./gradlew` 실행시 윈도우의 경우 `JAVA_HOME` 필요
+* EXPOSE = 컨테이너의 8080 포트 오픈
 
 ```sh
-# 로컬 이미지 생성
+# 도커 데스크톱에 로컬 이미지 생성
 docker build --no-cache -t spring_image:0.0.1 ./
+## 생성한 Dockerfile 파일을 읽어서 이미지를 만든다.
 ## --no-cache = 빌드를 캐시에 넣지 않는다.
 ## -t = 이름:버전 형식
 
