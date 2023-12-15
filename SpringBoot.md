@@ -39,7 +39,7 @@ services:
 ```
 
 ```sh
-cd docker-composes/mariadb
+cd docker-composes/{프로젝트}
 docker-compose up -d
 mysql -u root -p -P 43306
 docker exec -it mariadb_container /bin/bash
@@ -48,6 +48,7 @@ docker exec -it mariadb_container /bin/bash
 ## Spring Boot
 * https://umanking.github.io/2021/07/11/spring-boot-docker-starter
 * [CMD vs ENTRYPOINT](https://velog.io/@dachae/Docker-5-Dockerfile-%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD)
+* [Docker for Spring Boot](https://spring.io/guides/topicals/spring-boot-docker)
 
 Dockerfile
 ```Dockerfile
@@ -62,7 +63,7 @@ ARG JAR_FILE_PATH=target/*-SNAPSHOT.jar
 ARG JAR_FILE_PATH=build/libs/*-SNAPSHOT.jar
 
 COPY ${JAR_FILE_PATH} app.jar
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=${PROFILE}"]
 EXPOSE 8080
 ```
 * `./mvnw` 또는 `./gradlew` 실행시 윈도우의 경우 `JAVA_HOME` 필요
@@ -76,8 +77,9 @@ docker build --no-cache -t spring_image:0.0.1 ./
 ## -t = 이름:버전 형식
 
 # 컨테이너 생성
-docker create --name spring_container -P spring_image:0.0.1
+docker create --name spring_container -P -e PROFILE=production spring_image:0.0.1
 ## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
+## -e = 환경변수를 전달한다.
 ```
 
 ### Error response from daemon: pull access denied for spring_image
@@ -96,6 +98,7 @@ networks:
 
 services:
   mariadb_service:
+    ...
     networks:
       - maria_network
 
@@ -104,6 +107,8 @@ services:
     container_name: spring_container
     ports:
       - "48080:8080"
+    environment:
+      - PROFILE=production
     networks:
       - maria_network
 ```
@@ -114,3 +119,8 @@ src/main/resources/application-production.properties
 spring.datasource.url=jdbc:mysql://mariadb_service:3306/docker_database
 ```
 * IP를 컴포즈의 서비스 이름으로 맞춘다.
+
+```sh
+cd docker-composes/{프로젝트}
+docker-compose up -d
+```
