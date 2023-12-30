@@ -111,6 +111,8 @@ docker attach ubuntu_container
 ```sh
 # 버전 보기
 cat /etc/os-release
+# 사용자 보기
+cat /etc/passwd
 
 # apt update를 하지 않으면 sudo, net-tools 등을 설치 할 수 없다.
 apt update
