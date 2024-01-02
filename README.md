@@ -137,6 +137,7 @@ ping [호스트 ip]
 
 # MariaDB
 sudo apt install mariadb-server
+sudo service --status-all
 sudo service mariadb status
 sudo service mariadb start
 sudo mysql -u root
