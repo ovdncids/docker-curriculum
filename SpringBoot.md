@@ -85,7 +85,7 @@ docker create --name spring_container -P -e PROFILE=production spring_image:0.0.
 ### Error response from daemon: pull access denied for spring_image
 * `docker-compose.yml` 파일에서 `spring_image:0.0.1` 버전이 도커 데스크톱과 같은지 확인
 
-## MaraiDB와 Spring Boot 연결
+## MariaDB와 Spring Boot 연결
 ```sh
 docker network ls
 ```
