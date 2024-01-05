@@ -15,7 +15,7 @@ Docker Desktop > 도구 > Resources > Virtual disk limit > 40 GB
 ```
 
 ### Build cache 삭제
-* 도커는 빌드 할때마다 cache에 넣는다. 빌드가 많으면 사용되는 용량이 많으니 틈틈히 지우자.
+* 도커는 빌드 할때마다 cache를 생성한다. 빌드가 많으면 하드에 용량 많이 없어지므로 틈틈히 지우자.
 ```sh
 docker system prune -a
 # 또는
