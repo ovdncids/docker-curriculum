@@ -2,7 +2,7 @@
 * https://seosh817.tistory.com/387
 * [복잡한 로컬 구성](https://dev.gmarket.com/72)
 
-## React
+## React - 이미지 생성
 * [React Compose](https://night-knight.tistory.com/entry/Docker-1-React%EB%A1%9C-Docker-%EC%8B%A4%ED%96%89%EC%8B%9C%EC%BC%9C%EB%B3%B4%EA%B8%B0-Docker-compose)
 
 {React 프로젝트}/Dockerfile
@@ -35,7 +35,7 @@ docker create --name react_container -P react_image:0.0.1 npm start
 ```
 * 소스 파일, .git등 불필요한 파일이 서버에 복사 되고 이미지가 `1 GB`정도로 크므로 `NginX` 방식을 사용한다.
 
-## NGINX
+## NGINX - 이미지 생성
 ```sh
 cp Dockerfile React-Dockerfile
 npm run build
@@ -57,7 +57,7 @@ docker run -d --name nginx_react_container -p 40080:80 nginx_react_image:0.0.1
 * http://localhost:40080
 * `새로고침`하면 `404 Not Found` 발생한다.
 
-## MaraiDB
+## MaraiDB - 컴포즈 생성
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
 * 볼륨 생성: docker desktop > Volumes > Create > mariadb_volume
 
@@ -98,7 +98,7 @@ mysql -u root -p -P 43306
 docker exec -it mariadb_container /bin/bash
 ```
 
-## Spring Boot
+## Spring Boot - 이미지 생성
 * https://umanking.github.io/2021/07/11/spring-boot-docker-starter
 * [CMD vs ENTRYPOINT](https://velog.io/@dachae/Docker-5-Dockerfile-%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD)
 * [Docker for Spring Boot](https://spring.io/guides/topicals/spring-boot-docker)
