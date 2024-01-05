@@ -102,14 +102,6 @@ EXPOSE 80
 * [모범적인 Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)
 * [적용 사례](https://velog.io/@jadenkim5179/Next.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-docker-%EB%B0%B0%ED%8F%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%81%AC%EA%B8%B0-%EC%A4%84%EC%9D%B4%EA%B8%B0)
 
-next.config.js
-```js
-const nextConfig = {
-  output: 'standalone'
-}
-```
-* [Next.js는 standalone 모드로 빌드 해야 한다.](https://nextjs.org/docs/advanced-features/output-file-tracing)
-
 ```sh
 # 도커 데스크톱에 로컬 이미지 생성
 docker build --no-cache -t nextjs_image:0.0.1 ./
@@ -118,6 +110,14 @@ docker build --no-cache -t nextjs_image:0.0.1 ./
 docker create --name nextjs_container -p 43000:3000 nextjs_image:0.0.1
 ```
 * 단계 별로 `이미지 용량`과 `/app-?` 확인 한다.
+
+next.config.js
+```js
+const nextConfig = {
+  output: 'standalone'
+}
+```
+* [Next.js는 standalone 모드로 빌드 해야 한다.](https://nextjs.org/docs/advanced-features/output-file-tracing)
 
 ## MaraiDB - 컴포즈 생성
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
