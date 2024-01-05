@@ -2,6 +2,61 @@
 * https://seosh817.tistory.com/387
 * [복잡한 로컬 구성](https://dev.gmarket.com/72)
 
+## React
+* [React Compose](https://night-knight.tistory.com/entry/Docker-1-React%EB%A1%9C-Docker-%EC%8B%A4%ED%96%89%EC%8B%9C%EC%BC%9C%EB%B3%B4%EA%B8%B0-Docker-compose)
+
+{React 프로젝트}/Dockerfile
+```Dockerfile
+FROM node:16.20.2-alpine
+WORKDIR /react-server
+COPY . ./
+RUN npm install
+EXPOSE 3000
+```
+* WORKDIR = 이미지의 작업 경로
+* COPY = {React 프로젝트}에서 모든 파일(.)을 이미지의 작업 경로(./)로 복사
+* RUN = 이미지에서 실행하는 명령
+* EXPOSE = 컨테이너의 8080 포트 오픈
+
+```sh
+# 도커 데스크톱에 로컬 이미지 생성
+docker build --no-cache -t react_image:0.0.1 ./
+## 생성한 Dockerfile 파일을 읽어서 이미지를 만든다.
+## --no-cache = 빌드를 캐시에 넣지 않는다.
+## -t = 이름:버전 형식
+
+# 컨테이너 생성
+docker create --name react_container -P react_image:0.0.1
+## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
+
+# 컨테이너 삭제 후 재생성
+docker create --name react_container -P react_image:0.0.1 npm start
+## 이미지 뒤에 붙는 npm = [COMMAND], start = [ARG...]
+```
+* 소스 파일, .git등 불필요한 파일이 서버에 복사 되고 이미지가 `1 GB`정도로 크므로 `NginX` 방식을 사용한다.
+
+## NGINX
+```sh
+cp Dockerfile React-Dockerfile
+npm run build
+```
+{React 프로젝트}/Dockerfile
+```Dockerfile
+FROM nginx
+WORKDIR /usr/share/nginx/html
+COPY ./build ./
+EXPOSE 80
+```
+```sh
+# 도커 데스크톱에 로컬 이미지 생성
+docker build --no-cache -t nginx_react_image:0.0.1 ./
+
+# 컨테이너 생성
+docker run -d --name nginx_react_container -p 40080:80 nginx_react_image:0.0.1
+```
+* http://localhost:40080
+* `새로고침`하면 `404 Not Found` 발생한다.
+
 ## MaraiDB
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
 * 볼륨 생성: docker desktop > Volumes > Create > mariadb_volume
@@ -65,18 +120,13 @@ ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=${PROFILE}"]
 EXPOSE 8080
 ```
 * `./mvnw` 또는 `./gradlew` 실행시 윈도우의 경우 `JAVA_HOME` 필요
-* EXPOSE = 컨테이너의 8080 포트 오픈
 
 ```sh
 # 도커 데스크톱에 로컬 이미지 생성
 docker build --no-cache -t spring_image:0.0.1 ./
-## 생성한 Dockerfile 파일을 읽어서 이미지를 만든다.
-## --no-cache = 빌드를 캐시에 넣지 않는다.
-## -t = 이름:버전 형식
 
 # 컨테이너 생성
 docker create --name spring_container -P -e PROFILE=production spring_image:0.0.1
-## -P = 컨테이너가 실행될때 EXPOSE에서 열린 포트를 랜덤 호스트 포트와 연결한다.
 ## -e = 환경변수를 전달한다.
 ```
 
