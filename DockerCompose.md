@@ -36,10 +36,12 @@ docker create --name react_container -P react_image:0.0.1 npm start
 * 소스 파일, .git등 불필요한 파일이 서버에 복사 되고 이미지가 `1 GB`정도로 크므로 `NginX` 방식을 사용한다.
 
 ## NGINX - 이미지 생성
+* [NGINX React 연동](https://stackoverflow.com/questions/45598779/react-router-browserrouter-leads-to-404-not-found-nginx-error-when-going-to)
 ```sh
 cp Dockerfile React-Dockerfile
 npm run build
 ```
+
 {React 프로젝트}/Dockerfile
 ```Dockerfile
 FROM nginx
@@ -55,7 +57,45 @@ docker build --no-cache -t nginx_react_image:0.0.1 ./
 docker run -d --name nginx_react_container -p 40080:80 nginx_react_image:0.0.1
 ```
 * http://localhost:40080
-* `새로고침`하면 `404 Not Found` 발생한다.
+* http://localhost:40080/users (`404 Not Found` 발생한다.)
+
+{React 프로젝트}/Dockerfile.nginx.conf
+```conf
+server {
+    listen 80;
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+{React 프로젝트}/Dockerfile
+```Dockerfile
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+```
+
+<details><summary>Dockerfile로 default.conf 파일 수정하는 방법</summary>
+
+  {React 프로젝트}/Dockerfile
+  ```Dockerfile
+  RUN echo '\
+  server {\n\
+      listen 80;\n\
+      location / {\n\
+          root /usr/share/nginx/html;\n\
+          index index.html;\n\
+          try_files $uri $uri/ /index.html;\n\
+      }\n\
+  }'\
+  > /etc/nginx/conf.d/default.conf
+  
+  EXPOSE 80
+  ```
+  * `>> /etc/nginx/conf.d/default.conf` 이렇게 수정하면 이전 파일에 추가하고
+  * `> /etc/nginx/conf.d/default.conf` 이렇게 하면 이전 파일을 덮어씌운다.
+</details>
 
 ## MaraiDB - 컴포즈 생성
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
