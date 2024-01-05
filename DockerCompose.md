@@ -22,7 +22,7 @@ EXPOSE 3000
 # 도커 데스크톱에 로컬 이미지 생성
 docker build --no-cache -t react_image:0.0.1 ./
 ## 생성한 Dockerfile 파일을 읽어서 이미지를 만든다.
-## --no-cache = 빌드를 캐시에 넣지 않는다.
+## --no-cache = 현 빌드에 이전 빌드의 캐시를 사용하지 않는다. (현 빌드 후에는 현 빌드에 대한 캐시를 생성한다.)
 ## -t = 이름:버전 형식
 
 # 컨테이너 생성
@@ -34,6 +34,7 @@ docker create --name react_container -P react_image:0.0.1 npm start
 ## 이미지 뒤에 붙는 npm = [COMMAND], start = [ARG...]
 ```
 * 소스 파일, .git등 불필요한 파일이 서버에 복사 되고 이미지가 `1 GB`정도로 크므로 `NginX` 방식을 사용한다.
+* [빌드 캐시 삭제](https://github.com/ovdncids/docker-curriculum/blob/master/ETC.md#build-cache-%EC%82%AD%EC%A0%9C)
 
 ## NGINX - 이미지 생성
 * [NGINX React 연동](https://stackoverflow.com/questions/45598779/react-router-browserrouter-leads-to-404-not-found-nginx-error-when-going-to)
@@ -100,6 +101,14 @@ EXPOSE 80
 ## Next.js - 이미지 생성
 * [모범적인 Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)
 * [적용 사례](https://velog.io/@jadenkim5179/Next.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-docker-%EB%B0%B0%ED%8F%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%81%AC%EA%B8%B0-%EC%A4%84%EC%9D%B4%EA%B8%B0)
+
+next.config.js
+```js
+const nextConfig = {
+  output: 'standalone'
+}
+```
+* [Next.js는 standalone 모드로 빌드 해야 한다.](https://nextjs.org/docs/advanced-features/output-file-tracing)
 
 ```sh
 # 도커 데스크톱에 로컬 이미지 생성
