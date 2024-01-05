@@ -117,6 +117,7 @@ docker build --no-cache -t nextjs_image:0.0.1 ./
 # 컨테이너 생성
 docker create --name nextjs_container -p 43000:3000 nextjs_image:0.0.1
 ```
+* 단계 별로 `이미지 용량`과 `/app-?` 확인 한다.
 
 ## MaraiDB - 컴포즈 생성
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
