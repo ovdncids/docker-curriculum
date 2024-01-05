@@ -97,6 +97,18 @@ EXPOSE 80
   * `> /etc/nginx/conf.d/default.conf` 이렇게 하면 이전 파일을 덮어씌운다.
 </details>
 
+## Next.js - 이미지 생성
+* [모범적인 Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)
+* [적용 사례](https://velog.io/@jadenkim5179/Next.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-docker-%EB%B0%B0%ED%8F%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%81%AC%EA%B8%B0-%EC%A4%84%EC%9D%B4%EA%B8%B0)
+
+```sh
+# 도커 데스크톱에 로컬 이미지 생성
+docker build --no-cache -t nextjs_image:0.0.1 ./
+
+# 컨테이너 생성
+docker create --name nextjs_container -p 43000:3000 nextjs_image:0.0.1
+```
+
 ## MaraiDB - 컴포즈 생성
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
 * 볼륨 생성: docker desktop > Volumes > Create > mariadb_volume
