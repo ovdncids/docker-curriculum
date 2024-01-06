@@ -102,6 +102,44 @@ EXPOSE 80
 * [모범적인 Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)
 * [적용 사례](https://velog.io/@jadenkim5179/Next.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-docker-%EB%B0%B0%ED%8F%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%81%AC%EA%B8%B0-%EC%A4%84%EC%9D%B4%EA%B8%B0)
 
+{Next.js 프로젝트}/Dockerfile
+```Dockerfile
+FROM node:16.20.2-alpine AS base
+
+# 의존성 설치 (700 MB)
+FROM base AS dependencies
+RUN apk add --no-cache libc6-compat
+WORKDIR /app-dependencies
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# 빌더 (2 GB)
+FROM base AS builder
+WORKDIR /app-builder
+COPY --from=dependencies /app-dependencies/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+# 러너 (150 MB)
+FROM base AS runner
+WORKDIR /app-runner
+ENV NODE_ENV production
+ENV HOSTNAME "0.0.0.0"
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+COPY --from=builder --chown=nextjs:nodejs /app-builder/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app-builder/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app-builder/.next/static ./.next/static
+
+USER nextjs
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+* `npm ci`는 `package-lock.json` 기준으로 `npm install` 한다. (npm outdated)
+* `npm install`은 `npm outdated` 기준 `Wanted`를 설치한다.
+
 ```sh
 # 도커 데스크톱에 로컬 이미지 생성
 docker build --no-cache -t nextjs_image:0.0.1 ./
