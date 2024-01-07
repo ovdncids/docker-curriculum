@@ -207,6 +207,47 @@ mysql -u root -p -P 43306
 docker exec -it mariadb_container /bin/bash
 ```
 
+## MariaDB와 Spring Boot 연결
+```sh
+docker network ls
+```
+
+docker-composes/{프로젝트}/docker-compose.yml
+```yml
+networks:
+  compose_network:
+    driver: bridge
+
+services:
+  mariadb_service:
+    ...
+    networks:
+      - compose_network
+
+  nextjs_service:
+    image: nextjs_image:0.0.1
+    container_name: nextjs_container
+    ports:
+      - "43000:3000"
+    environment:
+      - ENV=production
+    networks:
+      - compose_network
+```
+* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `서비스 이름`으로 연결 가능하다.
+
+src/main/resources/application-production.properties
+```properties
+spring.datasource.url=jdbc:mysql://mariadb_service:3306/docker_database
+```
+* IP를 컴포즈의 서비스 이름으로 맞춘다.
+
+```sh
+cd docker-composes/{프로젝트}
+docker-compose up -d
+```
+
+
 ## Spring Boot - 이미지 생성
 * https://umanking.github.io/2021/07/11/spring-boot-docker-starter
 * [CMD vs ENTRYPOINT](https://velog.io/@dachae/Docker-5-Dockerfile-%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD)
@@ -243,21 +284,17 @@ docker create --name spring_container -P -e PROFILE=production spring_image:0.0.
 * `docker-compose.yml` 파일에서 `spring_image:0.0.1` 버전이 도커 데스크톱과 같은지 확인
 
 ## MariaDB와 Spring Boot 연결
-```sh
-docker network ls
-```
-
 docker-composes/{프로젝트}/docker-compose.yml
 ```yml
 networks:
-  maria_network:
+  compose_network:
     driver: bridge
 
 services:
   mariadb_service:
     ...
     networks:
-      - maria_network
+      - compose_network
 
   spring_service:
     image: spring_image:0.0.1
@@ -267,7 +304,7 @@ services:
     environment:
       - PROFILE=production
     networks:
-      - maria_network
+      - compose_network
 ```
 * networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `서비스 이름`으로 연결 가능하다.
 
