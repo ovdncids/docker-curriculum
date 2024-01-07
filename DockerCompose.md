@@ -156,6 +156,7 @@ const nextConfig = {
 }
 ```
 * [Next.js는 standalone 모드로 빌드 해야 한다.](https://nextjs.org/docs/advanced-features/output-file-tracing)
+* `CMD`는 docker create --name nextjs_container -p 43000:3000 nextjs_image:0.0.1 `node server.js`와 같다.
 
 ## MaraiDB - 컴포즈 생성
 * [Docker - MaraiDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
