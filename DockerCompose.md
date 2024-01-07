@@ -144,7 +144,7 @@ CMD ["node", "server.js"]
 docker build --no-cache -t nextjs_image:0.0.1 ./
 
 # 컨테이너 생성
-docker create --name nextjs_container -p 43000:3000 nextjs_image:0.0.1
+docker run --name nextjs_container -p 43000:3000 nextjs_image:0.0.1
 ```
 * 단계 별로 `이미지 용량`과 `/app-?` 확인 한다.
 
