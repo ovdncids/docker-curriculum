@@ -158,6 +158,7 @@ const nextConfig = {
 * `CMD`는 docker create --name nextjs_container -p 43000:3000 nextjs_image:0.0.1 `node server.js`와 같다.
 
 ### 환경 변수 전달
+* [Next.js - 환경 설정](https://github.com/ovdncids/react-curriculum/blob/master/Next-js.md#%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95)
 ```Dockerfile
 ARG ENV
 RUN npm run build:${ENV}
@@ -202,12 +203,15 @@ services:
 
 ```sh
 cd docker-composes/{프로젝트}
+
+## 컨테이너 생성
 docker-compose up -d
+
 mysql -u root -p -P 43306
 docker exec -it mariadb_container /bin/bash
 ```
 
-## MariaDB와 Spring Boot 연결
+## MariaDB와 Next.js 연결
 ```sh
 docker network ls
 ```
@@ -236,17 +240,29 @@ services:
 ```
 * networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `서비스 이름`으로 연결 가능하다.
 
-src/main/resources/application-production.properties
-```properties
-spring.datasource.url=jdbc:mysql://mariadb_service:3306/docker_database
+.env.production
+```env
+MYSQL_HOST=mariadb_container
+MYSQL_DATABASE=docker_database
+MYSQL_USER=docker_user
+MYSQL_PASSWORD=docker_password
 ```
-* IP를 컴포즈의 서비스 이름으로 맞춘다.
+* `HOST`를 `컴포즈의 서비스 이름`으로 맞춘다.
+* [MySQL2 연결](https://github.com/ovdncids/react-curriculum/blob/master/Next-js-13.4.md#mysql2-%EC%97%B0%EA%B2%B0)
+```sh
+# `libraries/mysql2Pool.js` 생성, `page.js` 또는 `route.js`에서 `await mysql2Pool()` 호출
+# `npm run build:production`에서 오류가 발생하면 `try catch` 사용
+## (빌드에서는 `mariadb_container` 네트워크를 찾을 수 없으므로 당연히 오류 발생한다. docker build 동일)
+
+docker build --no-cache -t nextjs_image:0.0.1 ./
+```
 
 ```sh
 cd docker-composes/{프로젝트}
+
+# 기존의 nextjs_container, mariadb_container 우선 삭제 후 실행
 docker-compose up -d
 ```
-
 
 ## Spring Boot - 이미지 생성
 * https://umanking.github.io/2021/07/11/spring-boot-docker-starter
@@ -312,9 +328,11 @@ src/main/resources/application-production.properties
 ```properties
 spring.datasource.url=jdbc:mysql://mariadb_service:3306/docker_database
 ```
-* IP를 컴포즈의 서비스 이름으로 맞춘다.
+* `HOST`를 `컴포즈의 서비스 이름`으로 맞춘다.
 
 ```sh
 cd docker-composes/{프로젝트}
+
+# 기존의 spring_container, mariadb_container 우선 삭제 후 실행
 docker-compose up -d
 ```
