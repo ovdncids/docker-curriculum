@@ -113,6 +113,8 @@ docker attach ubuntu_container
 cat /etc/os-release
 # 사용자 보기
 cat /etc/passwd
+# 현재 사용중인 SHELL 보기
+echo $SHELL
 
 # apt update를 하지 않으면 sudo, net-tools 등을 설치 할 수 없다.
 apt update
