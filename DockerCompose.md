@@ -240,7 +240,7 @@ services:
     networks:
       - compose_network
 ```
-* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `컴포즈의 컨테이너 이름`으로 연결 가능하다.
+* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 컴포즈의 `컨테이너 이름` 또는 `서비스 이름`으로 연결 가능하다.
 
 .env.production
 ```env
@@ -249,7 +249,7 @@ MYSQL_DATABASE=docker_database
 MYSQL_USER=docker_user
 MYSQL_PASSWORD=docker_password
 ```
-* `HOST`를 `컴포즈의 컨테이너 이름`으로 맞춘다.
+* `HOST`를 컴포즈의 `컨테이너 이름` 또는 `서비스 이름`으로 맞춘다.
 * [MySQL2 연결](https://github.com/ovdncids/react-curriculum/blob/master/Next-js-13.4.md#mysql2-%EC%97%B0%EA%B2%B0)
 ```sh
 # `libraries/mysql2Pool.js` 생성, `page.js` 또는 `route.js`에서 `await mysql2Pool()` 호출
@@ -324,13 +324,13 @@ services:
     networks:
       - compose_network
 ```
-* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `컴포즈의 서비스 이름`으로 연결 가능하다.
+* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 컴포즈의 `컨테이너 이름` 또는 `서비스 이름`으로 연결 가능하다.
 
 src/main/resources/application-production.properties
 ```properties
 spring.datasource.url=jdbc:mysql://mariadb_service:3306/docker_database
 ```
-* `HOST`를 `컴포즈의 서비스 이름`으로 맞춘다.
+* `HOST`를 컴포즈의 `컨테이너 이름` 또는 `서비스 이름`으로 맞춘다.
 
 ```sh
 cd docker-composes/{프로젝트}
