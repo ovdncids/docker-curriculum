@@ -136,8 +136,8 @@ USER nextjs
 EXPOSE 3000
 CMD ["node", "server.js"]
 ```
-* `npm ci`는 `package-lock.json` 기준으로 `npm install` 한다. (npm outdated)
 * `npm install`은 `npm outdated` 기준 `Wanted`를 설치한다.
+* `npm ci`는 `package-lock.json` 기준으로 `npm install` 한다. (npm outdated - Current)
 
 ```sh
 # 도커 데스크톱에 로컬 이미지 생성
@@ -169,6 +169,7 @@ docker build --build-arg ENV=production -t nextjs_image:0.0.1 ./
 
 ## MariaDB - 컴포즈 생성
 * [Docker - MariaDB](https://velog.io/@jkjan/Docker-MySQL-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D)
+* [MariaDB - 권한, 백업](https://github.com/ovdncids/mysql-curriculum/blob/master/GrantDump.md)
 * 볼륨 생성: docker desktop > Volumes > Create > mariadb_volume
 
 docker-composes/{프로젝트}/docker-compose.yml
@@ -204,10 +205,11 @@ services:
 ```sh
 cd docker-composes/{프로젝트}
 
-## 컨테이너 생성
+# 컨테이너 생성
 docker-compose up -d
 
 mysql -u root -p -P 43306
+## 기본 패스워드 0000
 docker exec -it mariadb_container /bin/bash
 ```
 
@@ -238,7 +240,7 @@ services:
     networks:
       - compose_network
 ```
-* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `서비스 이름`으로 연결 가능하다.
+* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `컴포즈의 컨테이너 이름`으로 연결 가능하다.
 
 .env.production
 ```env
@@ -247,11 +249,11 @@ MYSQL_DATABASE=docker_database
 MYSQL_USER=docker_user
 MYSQL_PASSWORD=docker_password
 ```
-* `HOST`를 `컴포즈의 서비스 이름`으로 맞춘다.
+* `HOST`를 `컴포즈의 컨테이너 이름`으로 맞춘다.
 * [MySQL2 연결](https://github.com/ovdncids/react-curriculum/blob/master/Next-js-13.4.md#mysql2-%EC%97%B0%EA%B2%B0)
 ```sh
 # `libraries/mysql2Pool.js` 생성, `page.js` 또는 `route.js`에서 `await mysql2Pool()` 호출
-# `npm run build:production`에서 오류가 발생하면 `try catch` 사용
+# `npm run build`에서 오류가 발생하면 `try catch` 사용
 ## (빌드에서는 `mariadb_container` 네트워크를 찾을 수 없으므로 당연히 오류 발생한다. docker build 동일)
 
 docker build --no-cache -t nextjs_image:0.0.1 ./
@@ -322,7 +324,7 @@ services:
     networks:
       - compose_network
 ```
-* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `서비스 이름`으로 연결 가능하다.
+* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 `컴포즈의 서비스 이름`으로 연결 가능하다.
 
 src/main/resources/application-production.properties
 ```properties
