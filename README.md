@@ -144,7 +144,7 @@ sudo service mariadb status
 sudo service mariadb start
 sudo mysql -u root
 ```
-* [MariaDB - 권한](https://github.com/ovdncids/mysql-curriculum/blob/master/Grant.md)
+* [MariaDB - 권한](https://github.com/ovdncids/mysql-curriculum/blob/master/GrantDump.md)
 * [Raspberry Pi - Java](https://github.com/ovdncids/raspberrypi-curriculum#java)
 
 ## 컨테이너 생성시 포트를 설정하지 않은 경우
