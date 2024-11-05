@@ -10,6 +10,7 @@
 https://docs.docker.com/get-docker
 
 ## 아파치 Image 설치
+* https://nakanara.tistory.com/248
 ```sh
 # 설치된 image 보기
 docker images
@@ -64,7 +65,7 @@ docker exec -it httpd3 /bin/sh
 docker exec -it httpd3 /bin/bash
 ```
 
-### 아파치 proxy
+### Apache - Proxy
 ```sh
 # 주석 유지
 #Include conf/extra/httpd-vhosts.conf
