@@ -72,6 +72,7 @@ docker exec -it httpd3 /bin/bash
 # 주석 해제 또는 <VirtualHost *:80> 위에 선언
 LoadModule proxy_module modules/mod_proxy.so
 LoadModule proxy_http_module modules/mod_proxy_http.so
+
 <VirtualHost *:80>
     <Location /api>
         ProxyPass http://{ip}:{port}/api
