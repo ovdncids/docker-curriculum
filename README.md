@@ -55,6 +55,7 @@ docker run --name httpd2 -p 8880:80 httpd
 # 호스트와 컨테이너 사아에 포트 포워딩과 파일 연결 하는 httpd3 컨테이너 생성
 docker run --name httpd3 -p 8880:80 -v {호스트 경로}:/usr/local/apache2/htdocs httpd
 ## run = create, start, attach 또는 exec 한번에 실행
+## {호스트 경로} = 파일을 복사하지 않고, 심볼릭 링크처럼 공유 된다.
 ```
 
 ## 컨테이너에 터미널 연결
