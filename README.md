@@ -66,6 +66,7 @@ docker exec -it httpd3 /bin/bash
 ```
 
 ### Apache - Proxy
+* https://nakanara.tistory.com/248
 ```sh
 # 주석 유지
 #Include conf/extra/httpd-vhosts.conf
