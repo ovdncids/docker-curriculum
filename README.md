@@ -158,6 +158,11 @@ ping [호스트 ip]
 sudo apt install traceroute
 sudo traceroute -T -p 80 google.com
 
+# 포트포워드 설정에서 내부 네트워크에서 외부 IP 포트로 접속 안 되는 이유? (ChatGPT)
+## 통신사의 공유기를 사용하는 경우 NAT Loopback 미지원하면 접속 할 수 없다.
+## 1. 공유기 변경
+## 2. 내부 컴퓨터의 /etc/hosts 파일 변경, 테스트 컴퓨터의 /etc/hosts 파일 변경
+
 # MariaDB
 sudo apt install mariadb-server
 sudo service --status-all
