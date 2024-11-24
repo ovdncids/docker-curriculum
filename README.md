@@ -155,6 +155,8 @@ sudo apt install net-tools
 sudo apt install iputils-ping
 ifconfig
 ping [호스트 ip]
+sudo apt install traceroute
+sudo traceroute -T -p 80 google.com
 
 # MariaDB
 sudo apt install mariadb-server
