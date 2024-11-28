@@ -175,7 +175,11 @@ sudo mysql -u root
 * [Raspberry Pi - Java](https://github.com/ovdncids/docker-curriculum/blob/master/RaspberryPi.md#java)
 
 ## Ubuntu GUI
-* https://stackoverflow.com/questions/40658095/how-to-open-ubuntu-gui-inside-a-docker-image
+* [Ubuntu 18.04, python3.6](https://stackoverflow.com/questions/40658095/how-to-open-ubuntu-gui-inside-a-docker-image)
+* [Ubuntu 20.04, python3.8.5](https://front-it.tistory.com/41)
+```sh
+docker run -p 6080:80 -p 5900:5900 -e VNC_PASSWORD=password -v /:/data dorowu/ubuntu-desktop-lxde-vnc
+```
 
 ## 컨테이너 생성시 포트를 설정하지 않은 경우
 * https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container
