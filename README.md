@@ -172,7 +172,7 @@ sudo service mariadb start
 sudo mysql -u root
 ```
 * [MariaDB - 권한](https://github.com/ovdncids/mysql-curriculum/blob/master/GrantDump.md)
-* [Raspberry Pi - Java](https://github.com/ovdncids/raspberrypi-curriculum#java)
+* [Raspberry Pi - Java](https://github.com/ovdncids/docker-curriculum/blob/master/RaspberryPi.md#java)
 
 ## 컨테이너 생성시 포트를 설정하지 않은 경우
 * https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container
