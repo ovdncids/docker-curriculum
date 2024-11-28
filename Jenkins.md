@@ -135,7 +135,7 @@ BUILD_ID=leaveNpm npm run start 1> ../log.out 2> ../err.out &
 ```
 
 ### Jenkins - bash
-* [NVM](https://github.com/ovdncids/raspberrypi-curriculum/tree/master?tab=readme-ov-file#nvm)
+* [NVM](https://github.com/ovdncids/docker-curriculum/blob/master/RaspberryPi.md#nvm)
 * `jenkins 계정`의 루트는 `/var/lib/jenkins`이고 로그인 하여도 `~/.bashrc 파일`을 읽지 않는다.
 ```sh
 sudo su - jenkins
