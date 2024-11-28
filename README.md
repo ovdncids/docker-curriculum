@@ -174,6 +174,9 @@ sudo mysql -u root
 * [MariaDB - 권한](https://github.com/ovdncids/mysql-curriculum/blob/master/GrantDump.md)
 * [Raspberry Pi - Java](https://github.com/ovdncids/docker-curriculum/blob/master/RaspberryPi.md#java)
 
+## Ubuntu GUI
+* https://stackoverflow.com/questions/40658095/how-to-open-ubuntu-gui-inside-a-docker-image
+
 ## 컨테이너 생성시 포트를 설정하지 않은 경우
 * https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container
 * [컨테이너 파일의 위치](https://yooloo.tistory.com/188)
