@@ -179,6 +179,11 @@ sudo mysql -u root
 * [Ubuntu 20.04, python3.8.5](https://front-it.tistory.com/41)
 ```sh
 docker run -p 6080:80 -p 5900:5900 -e VNC_PASSWORD=password -v /:/data dorowu/ubuntu-desktop-lxde-vnc
+
+# VNC 접속
+python --version
+apt update
+apt install pip
 ```
 
 ## 컨테이너 생성시 포트를 설정하지 않은 경우
