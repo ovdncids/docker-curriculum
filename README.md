@@ -175,8 +175,8 @@ sudo mysql -u root
 * [Raspberry Pi - Java](https://github.com/ovdncids/docker-curriculum/blob/master/RaspberryPi.md#java)
 
 ## Ubuntu GUI
-* [Ubuntu 18.04, python 3.6.8](https://stackoverflow.com/questions/40658095/how-to-open-ubuntu-gui-inside-a-docker-image)
-* [Ubuntu 20.04, python 3.8.5](https://front-it.tistory.com/41)
+* [Ubuntu 18.04, python 3.6.8, 2018년](https://stackoverflow.com/questions/40658095/how-to-open-ubuntu-gui-inside-a-docker-image)
+* [Ubuntu 20.04, python 3.8.5, 2020년](https://front-it.tistory.com/41)
 ```sh
 docker run --name ubuntu-desktop-20.04 -p 6080:80 -p 5900:5900 -e VNC_PASSWORD=password -v {호스트 경로}:/data dorowu/ubuntu-desktop-lxde-vnc
 
@@ -185,7 +185,7 @@ python --version
 apt update
 apt install pip
 ```
-* Ubuntu 22.04, python 3.10.12
+* Ubuntu 22.04, python 3.10.12, 2022년
 
 
 ## 컨테이너 생성시 포트를 설정하지 않은 경우
