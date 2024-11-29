@@ -113,7 +113,7 @@ open --background -a Docker
 docker pull ubuntu:latest
 
 # 컨테이너 생성
-docker create -it --name ubuntu_container -p 33000:3000 -p 33306:3306 -p 38080:8080 ubuntu
+docker create -it --name ubuntu-22.04 -p 33000:3000 -p 33306:3306 -p 38080:8080 ubuntu:22.04
 ## -it = 컨테이너 내부로 진입 (attach 가능, i = 상호 입출력, t = tty를 활성화하여 bash 쉘을 사용)
 ### -it 옵션을 설정 하지 않으면 `docker start ubuntu_container` 후에 자동 종료 된다.
 ## -d = 데몬 서비스 (detached 모드, exec으로 터미널 가능)
