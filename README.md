@@ -178,7 +178,7 @@ sudo mysql -u root
 * [Ubuntu 18.04, python 3.6.8](https://stackoverflow.com/questions/40658095/how-to-open-ubuntu-gui-inside-a-docker-image)
 * [Ubuntu 20.04, python 3.8.5](https://front-it.tistory.com/41)
 ```sh
-docker run --name ubuntu-desktop-20.04  -p 6080:80 -p 5900:5900 -e VNC_PASSWORD=password -v {호스트 경로}:/data dorowu/ubuntu-desktop-lxde-vnc
+docker run --name ubuntu-desktop-20.04 -p 6080:80 -p 5900:5900 -e VNC_PASSWORD=password -v {호스트 경로}:/data dorowu/ubuntu-desktop-lxde-vnc
 
 # VNC 접속
 python --version
