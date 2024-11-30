@@ -7,6 +7,29 @@
 ~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw (기본이 64 GB)
 ```
 
+## Mac M1 - Docker 초기화
+* https://github.com/docker/for-mac/issues/6145
+```sh
+Docker 종료
+
+# 지금 실행 중이지 않은 컨테이너 삭제
+docker system prune -a
+# 볼륨 삭제
+docker volume prune
+
+# brew uninstall docker
+
+rm -rf ~/.docker
+rm -rf ~/Library/Caches/com.docker.docker
+rm -rf ~/Library/Group Containers/group.com.docker
+rm -rf ~/Library/Containers/com.docker.docker
+rm -rf ~/Library/Application\ Support/Docker\ Desktop
+
+open --background -a Docker
+# brew install --cask docker
+## --cask는 GUI 기반 프로그램 설치
+```
+
 ### Docker.raw 크기 줄이기
 ```sh
 Docker Desktop > 도구 > Resources > Virtual disk limit > 40 GB
