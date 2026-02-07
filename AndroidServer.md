@@ -26,7 +26,7 @@ ssh u0_a348@localhost -p 8022    # 접속 후에 폰을 닫아도 접속 유지�
 apt install proot-distro
 proot-distro install ubuntu
 # root 권한으로 로그인
-proot-distro login ubuntu
+proot-distro login ubuntu --user root
 # 버전 확인
 lsb_release -a
 
