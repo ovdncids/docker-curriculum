@@ -8,7 +8,7 @@
 
 # Android 10보다 낮을 경우 `F-Droid APK 설치` (https://f-droid.org)
 # F-Droid > Termux 검색 후 설치
-# Ubuntu에서 su 명령어가 정상동작 하지 않을 수 있다.
+# Android 8~10에서는 Ubuntu의 su 명령어가 정상동작 하지 않을 수 있다.
 
 # 버전 확인
 termux-info
