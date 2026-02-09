@@ -1,9 +1,16 @@
 # 안드로이드폰 서버 만들기
 * https://www.youtube.com/watch?v=trjUbvSXfmc&t=12s0
 
+# Termux@3.0.9 (Android 10 이상 필요)
 ```sh
 # Termux 앱 설치 (Ubuntu 설치전에 가볍게 Terminal을 사용 할 수 있다. 제약이 큼)
 설정 > 애플리케이션 > Termux > 배터리 > 제한 없음
+
+# Android 10보다 낮을 경우 `F-Droid APK 설치` (https://f-droid.org)
+# F-Droid > Termux 검색 후 설치
+
+# 버전 확인
+termux-info
 
 apt update
 apt upgrade
@@ -12,7 +19,7 @@ passwd
 whoami    # 사용자 아이디 u0_a348
 
 apt install termux-tools
-# Termux 애플리케이션이 백그라운드에서도 계속 돌게 만듬
+# Termux 애플리케이션이 백그라운드에서도 계속 돌게 만듬 (이미 설치 되어 있다.)
 termux-wake-lock
 ifconfig
 sshd
