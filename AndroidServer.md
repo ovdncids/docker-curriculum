@@ -70,6 +70,15 @@ http://localhost:8000
 
 # 패스워드 확인
 /home/{사용자}/.config/code-server/config.yaml
+
+# 실행 파일 (tmux은 nohup 같은것 사용 불가)
+vi code-server.sh
+
+#!/usr/bin/env bash
+tmux new -s code-server "/usr/bin/code-server --bind-addr 127.0.0.1:8000"  > code-server.log
+
+chmod +x code-server.sh
+./code-server.sh
 ```
 * ❕ `tmux session`은 ssh 접속해서 생성하면 ssh 종료와 함께 꺼지므로 Android쪽에서 사용해야 한다.
 * ❕ `code-server`에 접속해서 Terminal을 쓰면 Android의 터미널 환경이다.
