@@ -83,3 +83,11 @@ chmod +x code-server.sh
 ```
 * ❕ `tmux session`은 ssh 접속해서 생성하면 ssh 종료와 함께 꺼지므로 Android쪽에서 사용해야 한다.
 * ❕ `code-server`에 접속해서 Terminal을 쓰면 Android의 터미널 환경이다.
+
+### Cloudflared@2026.2.0
+```sh
+wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
+apt install ./cloudflared-linux-arm64.deb
+cloudflared tunnel --url http://localhost:8000
+# https://xxx.trycloudflare.com 외부 주소 생성
+```
