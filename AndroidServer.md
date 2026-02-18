@@ -1,7 +1,7 @@
 # 안드로이드폰 서버 만들기
 * https://www.youtube.com/watch?v=trjUbvSXfmc&t=12s0
 
-# Termux@3.0.9 (Android 10 이상 필요)
+## Termux@3.0.9 (Android 10 이상 필요)
 ```sh
 # Termux 앱 설치 (Ubuntu 설치전에 가볍게 Terminal을 사용 할 수 있다. 제약이 큼)
 설정 > 애플리케이션 > Termux > 배터리 > 제한 없음
@@ -84,10 +84,15 @@ chmod +x code-server.sh
 * ❕ `tmux session`은 ssh 접속해서 생성하면 ssh 종료와 함께 꺼지므로 Android쪽에서 사용해야 한다.
 * ❕ `code-server`에 접속해서 Terminal을 쓰면 Android의 터미널 환경이다.
 
-### Cloudflared@2026.2.0
+### Cloudflared@2026.2.0 (가볍게 외부 주소 쓰기 좋음)
 ```sh
 wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
 apt install ./cloudflared-linux-arm64.deb
 cloudflared tunnel --url http://localhost:8000
 # https://xxx.trycloudflare.com 외부 주소 생성
 ```
+
+### tailscale@1.94.1 (하나의 계정으로 tailscale로 로그인 하면 VPN을 이용해서 여러 
+* https://tailscale.com/download
+* `Mac`은 Settings... > VPN On Demand: Enable > 이렇게 해야 다른 장치에 연결 가능
+* ❕ 장치끼리 연결에 시간이 좀 걸릴 수 있다.
