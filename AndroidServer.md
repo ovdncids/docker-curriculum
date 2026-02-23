@@ -92,7 +92,8 @@ cloudflared tunnel --url http://localhost:8000
 # https://xxx.trycloudflare.com 외부 주소 생성
 ```
 
-### tailscale@1.94.1 (하나의 계정으로 tailscale로 로그인 하면 VPN을 이용해서 여러 
+### tailscale@1.94.1 (하나의 계정으로 tailscale로 로그인 하면 VPN을 이용해서 여러 장치를 같은 네트워크에 위치함)
 * https://tailscale.com/download
+* 한 테더링에 여러 장치를 연결 하였지만 서로 네트워크가 되지 않을 경우 사용
 * `Mac`은 Settings... > VPN On Demand: Enable > 이렇게 해야 다른 장치에 연결 가능
 * ❕ 장치끼리 연결에 시간이 좀 걸릴 수 있다.
