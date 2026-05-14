@@ -54,7 +54,8 @@ docker rm httpd1
 docker pull tomcat:9.0.118-jdk8-temurin-jammy
 docker run -it --rm -p 8888:8080 -v {경로}\ROOT.war:/usr/local/tomcat/webapps/ROOT.war tomcat:9.0.118-jdk8-temurin-jammy
 ```
-* Maven 프로젝트는 `mvn clean package`으로 `war 파일` 생성. `mvn deploy` 아님
+* Maven 프로젝트는 `mvn clean package`으로 `war 파일` 생성. `mvn deploy` 아님.
+* http://localhost:8888
 
 ## 호스트(내 컴퓨터)와 연결 하며 컨테이너 생성
 ```sh
