@@ -48,6 +48,14 @@ docker start httpd1
 docker rm httpd1
 ```
 
+## Tomcat
+```sh
+# Docker Desktop에서 Tomcat 이미지 검색
+docker pull tomcat:9.0.118-jdk8-temurin-jammy
+docker run -it --rm -p 8888:8080 -v {경로}\ROOT.war:/usr/local/tomcat/webapps/ROOT.war tomcat:9.0.118-jdk8-temurin-jammy
+```
+* Maven 프로젝트는 `mvn clean package`으로 `war 파일` 생성. `mvn deploy` 아님
+
 ## 호스트(내 컴퓨터)와 연결 하며 컨테이너 생성
 ```sh
 # 호스트와 컨테이너 사이에 포트 포워딩 하는 httpd2 컨테이너 생성
