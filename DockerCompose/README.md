@@ -1,7 +1,9 @@
 # DockerCompose
-docker-composes/{프로젝트}/docker-compose.yml
+* https://seosh817.tistory.com/387
+* [복잡한 로컬 구성](https://dev.gmarket.com/72)
 
 ## Networks
+docker-composes/{프로젝트}/docker-compose.yml
 ```yml
 networks:
   a_network:
