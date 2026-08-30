@@ -37,7 +37,7 @@ cd docker-composes/{프로젝트}
 docker-compose up -d
 ```
 
-## GitLab
+## GitLab@19.3
 ```yml
 services:
   gitlab:
@@ -92,3 +92,4 @@ ssh -T -p 2222 git@{호스트_IP}
 git push --set-upstream origin main
 ```
 
+## Python@3.12.10, uv@0.12.7, FastAPI0.141.1, uvicorn@0.52.4
