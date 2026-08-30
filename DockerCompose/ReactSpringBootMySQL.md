@@ -1,7 +1,3 @@
-# Docker Compose
-* https://seosh817.tistory.com/387
-* [복잡한 로컬 구성](https://dev.gmarket.com/72)
-
 ## React - 이미지 생성
 * [React Compose](https://night-knight.tistory.com/entry/Docker-1-React%EB%A1%9C-Docker-%EC%8B%A4%ED%96%89%EC%8B%9C%EC%BC%9C%EB%B3%B4%EA%B8%B0-Docker-compose)
 
