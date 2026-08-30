@@ -174,8 +174,6 @@ docker build --build-arg ENV=production -t nextjs_image:0.0.1 ./
 
 docker-composes/{프로젝트}/docker-compose.yml
 ```yml
-version: "3.9"
-
 volumes:
   mariadb_volume:
     external: true
