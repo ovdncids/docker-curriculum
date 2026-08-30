@@ -30,6 +30,13 @@ services:
 * `docker-compose.yml` 안에서는 기본적으로 `networks 설정 없이` `container_name` 또는 `서비스 이름`으로 서로 접속 가능하다.
 * `networks 설정`은 `네트워크 격리`하고 싶을때 사용한다.
 
+```sh
+cd docker-composes/{프로젝트}
+
+# docker-compose.yml 바탕으로 컨테이너 생성
+docker-compose up -d
+```
+
 ## GitLab
 ```yml
 services:
@@ -40,7 +47,7 @@ services:
     hostname: gitlab.local
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://{호스트 IP}:8929'
+        external_url 'http://{호스트_IP}:8929'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
     ports:
       - "8929:8929"
@@ -61,4 +68,27 @@ cat /etc/gitlab/initial_root_password
 
 # 강제 패스워드 변경
 docker exec -it gitlab gitlab-rake "gitlab:password:reset"
+## Enter username: root
+
+# http://{호스트 IP}:8929
+## 사용자 계정 생성
+## root 계정으로 로그인 후 사용자 계정 활성화
+## 사용자 계정으로 프로젝트 생성
+
+# 프로젝트 폴더
+git remote add origin ssh://git@{호스트_IP}:2222/{사용자}/{프로젝트_명}.git
+git push --set-upstream origin main
+## The authenticity of host '[{호스트_IP}]:2222 ([{호스트_IP}]:2222)' can't be established.
+## ED25519 key fingerprint is: SHA256:xxx...
+
+ssh-keygen -t ed25519 -C "{사용자_이메일}"
+cat ~/.ssh/id_ed25519.pub
+## SHA256:xxx... 복사
+## http://{호스트 IP}:8929 > 사용자 > 오른쪽 위 프로필 > Edit profile > Access > SSH Keys > 붙여 넣기
+
+ssh -T -p 2222 git@{호스트_IP}
+## Welcome to GitLab, @사용자
+
+git push --set-upstream origin main
 ```
+
