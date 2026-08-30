@@ -32,10 +32,6 @@ services:
 
 ## GitLab
 ```yml
-networks:
-  compose_network:
-    driver: bridge
-
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
