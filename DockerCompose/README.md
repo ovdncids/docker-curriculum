@@ -92,7 +92,7 @@ ssh -T -p 2222 git@{호스트_IP}
 git push --set-upstream origin main
 ```
 
-## Python@3.12.10, uv@0.12.7, FastAPI0.141.1, uvicorn@0.52.4
+## Python@3.12.10, uv@0.12.7, FastAPI@0.141.1, uvicorn@0.52.4
 * https://github.com/ovdncids/python-curriculum/blob/master/PythonInstall.md
 
 {프로젝트}/Dockerfile
