@@ -238,7 +238,6 @@ services:
     networks:
       - compose_network
 ```
-* networks 설정을 `bridge`로 맞추면 컨테이너 끼리 `IP` 대신 컴포즈의 `컨테이너 이름` 또는 `서비스 이름`으로 연결 가능하다.
 
 .env.production
 ```env
