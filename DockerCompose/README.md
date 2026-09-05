@@ -139,4 +139,4 @@ name = "nexus"
 url = "http://localhost:8081/repository/pypi-proxy/simple"
 default = true
 ```
-* Nexus에서 `pypi-proxy`를 생성하면 `pypi-proxy/simple`도 같이 생성해 준다.
+* Nexus에서 `pypi-proxy`를 생성하면 `pypi-proxy/simple`도 같이 생성해 준다. (simple은 pypi만의 관행 이다.)
