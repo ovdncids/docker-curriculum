@@ -136,6 +136,7 @@ docker run --name fastapi-project -p 8000:8000 fastapi-project-image
 ```toml
 [[tool.uv.index]]
 name = "nexus"
-url = "http://localhost:8081/repository/pypi-proxy"
+url = "http://localhost:8081/repository/pypi-proxy/simple"
 default = true
 ```
+* Nexus에서 `pypi-proxy`를 생성하면 `pypi-proxy/simple`도 같이 생성해 준다.
