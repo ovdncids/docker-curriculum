@@ -110,7 +110,7 @@ volumes:
 ## Python@3.12.10, uv@0.12.7, FastAPI@0.141.1, uvicorn@0.52.4
 * https://github.com/ovdncids/python-curriculum/blob/master/PythonInstall.md
 
-{프로젝트}/Dockerfile
+docker-composes/{프로젝트}/{Python 프로젝트}/Dockerfile
 ```Dockerfile
 # Build
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
@@ -140,3 +140,34 @@ url = "http://localhost:8081/repository/pypi-proxy/simple"
 default = true
 ```
 * Nexus에서 `pypi-proxy`를 생성하면 `pypi-proxy/simple`도 같이 생성해 준다. (simple은 pypi만의 관행 이다.)
+
+## Jenkins@2.258.3
+docker-composes/{프로젝트}/Dockerfile
+```Dockerfile
+FROM jenkins/jenkins:lts
+USER root
+RUN apt-get update \
+    && apt-get install -y docker.io \
+    && rm -rf /var/lib/apt/lists/*
+USER jenkins
+```
+```yml
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+# `/var/run/docker.sock:/var/run/docker.sock` 호스트의 /var/run/docker.sock를 컨테이너가 그대로 쓴다.
+# `./`는 호스트의 경로를 쓴다. (docker-composes/{프로젝트}/jenkins_home) 따라서 아래는 불필요 하다.
+# volumes:
+#   jenkins_home:
+```
