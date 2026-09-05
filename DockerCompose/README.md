@@ -92,6 +92,21 @@ ssh -T -p 2222 git@{호스트_IP}
 git push --set-upstream origin main
 ```
 
+## Nexus@3.96.0-09
+```yml
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    container_name: nexus
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    volumes:
+      - nexus-data:/nexus-data
+volumes:
+  nexus-data:
+```
+
 ## Python@3.12.10, uv@0.12.7, FastAPI@0.141.1, uvicorn@0.52.4
 * https://github.com/ovdncids/python-curriculum/blob/master/PythonInstall.md
 
@@ -114,4 +129,13 @@ CMD ["uvicorn", "fastapi_project.main:app", "--host", "0.0.0.0", "--port", "8000
 ```sh
 docker build -t fastapi-project-image .
 docker run --name fastapi-project -p 8000:8000 fastapi-project-image
+```
+
+### Python with Nexus
+* pyproject.toml
+```toml
+[[tool.uv.index]]
+name = "nexus"
+url = "http://localhost:8081/repository/pypi-proxy"
+default = true
 ```
