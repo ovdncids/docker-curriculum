@@ -149,6 +149,7 @@ USER root
 RUN apt-get update \
     && apt-get install -y docker.io \
     && rm -rf /var/lib/apt/lists/*
+RUN usermod -aG root jenkins
 USER jenkins
 ```
 ```yml
@@ -166,10 +167,10 @@ services:
       - ./jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
 
-# `/var/run/docker.sock:/var/run/docker.sock` 호스트의 /var/run/docker.sock를 컨테이너가 그대로 쓴다.
 # `./`는 호스트의 경로를 쓴다. (docker-composes/{프로젝트}/jenkins_home) 따라서 아래는 불필요 하다.
 # volumes:
 #   jenkins_home:
+# `/var/run/docker.sock:/var/run/docker.sock` 호스트의 /var/run/docker.sock를 컨테이너가 그대로 쓴다. (권한: `RUN usermod -aG root jenkins`)
 ```
 ```sh
 # Jenkins가 호스트의 docker를 사용할 수 있는지 확인
