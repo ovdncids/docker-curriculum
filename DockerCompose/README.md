@@ -171,3 +171,26 @@ services:
 # volumes:
 #   jenkins_home:
 ```
+```sh
+# Jenkins가 호스트의 docker를 사용할 수 있는지 확인
+docker exec jenkins docker version
+```
+* http://localhost:8080
+* 플러그인 없이 설치
+* Jenkins 관리 > Plugins > Available plugins > `Folders Plugin`, `Pipeline`
+
+Pipeline Script
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'ps -p $$'
+                git branch: 'main', url: 'http://gitlab:8929/{사용자}/{프로젝트_명}.git'
+            }
+        }
+    }
+}
+```
+* `./jenkins_home/workspace/{폴더}/{파이프_명}`에 빌드된 파일 존재
