@@ -52,12 +52,15 @@ docker rm httpd1
 * 기본 쉘은 `/bin/sh`, `/bin/bash` 등 다양하다.
 * `$PATH` 등의 환경 설정 추가는 `컨테이너 생성 명령` 또는 `Dockerfile` 파일에서 추가한다.
 ```sh
-# ps 명령으로 쉘 확인
+# ps 명령으로 컨테이너 쉘 확인
 docker exec httpd1 ps -p $$
 docker exec httpd1 ps -p $$ -o args=
 
-# ls 명령으로 쉘 확인
+# ls 명령으로 컨테이너 쉘 확인
 docker exec httpd1 ls -l /bin/sh
+
+# whoami 명령으로 컨테이너 기본 사용자 확인
+docker exec httpd1 whoami
 ```
 * Docker Desktop > Containers > httpd1 > Exec (컨테이너의 기본 쉘로 터미널 연결)
 * [Oracle 쉘](https://github.com/ovdncids/mysql-curriculum/blob/master/Oracle.md)
