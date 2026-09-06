@@ -140,6 +140,8 @@ url = "http://localhost:8081/repository/pypi-proxy/simple"
 default = true
 ```
 * Nexus에서 `pypi-proxy`를 생성하면 `pypi-proxy/simple`도 같이 생성해 준다. (simple은 pypi만의 관행 이다.)
+* http://localhost:8081/repository/pypi-proxy/simple (404 페이지)
+* http://localhost:8081/repository/pypi-proxy/simple/ (모든 라이브러리를 볼 수 있는 페이지)
 
 ## Jenkins@2.258.3
 docker-composes/{프로젝트}/Dockerfile
@@ -205,6 +207,7 @@ pipeline {
                 sh '''
                     export PATH="$HOME/.local/bin:$PATH"
                     echo $PATH
+                    UV_DEFAULT_INDEX=http://nexus:8081/repository/pypi-proxy/simple
                     uv sync --frozen
                     uv build
                 '''
