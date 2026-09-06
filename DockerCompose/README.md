@@ -207,8 +207,9 @@ pipeline {
                 sh '''
                     export PATH="$HOME/.local/bin:$PATH"
                     echo $PATH
-                    UV_DEFAULT_INDEX=http://nexus:8081/repository/pypi-proxy/simple
-                    uv sync --frozen
+                    export UV_DEFAULT_INDEX=http://nexus:8081/repository/pypi-proxy/simple
+                    uv cache clean
+                    uv sync
                     uv build
                 '''
             }
