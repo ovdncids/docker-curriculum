@@ -185,7 +185,7 @@ docker exec jenkins docker version
 
 # 1. 이미 Dockerfile에서 uv가 설치된 상황에서 uv 실행
 docker exec jenkins uv --version
-# 2. 컨테이너에 uv설치 (Pipeline에 `export PATH="$HOME/.local/bin:$PATH"` 추가해야 uv 사용 가능)
+# 2. 컨테이너에 uv 설치 (Pipeline에 `export PATH="$HOME/.local/bin:$PATH"` 추가해야 uv 사용 가능)
 docker exec jenkins curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 * http://localhost:8080
@@ -196,6 +196,10 @@ Pipeline Script
 ```groovy
 pipeline {
     agent any
+    environment {
+        ECHO_PATH = "${HOME}/.local/bin:${PATH}"
+        UV_DEFAULT_INDEX = 'http://nexus:8081/repository/pypi-proxy/simple'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -205,9 +209,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
+                    # 컨테이너에 uv 설치한 경우 PATH에 `$HOME/.local/bin` 추가해야 함
                     export PATH="$HOME/.local/bin:$PATH"
                     echo $PATH
-                    export UV_DEFAULT_INDEX=http://nexus:8081/repository/pypi-proxy/simple
+                    echo $ECHO_PATH
+                    # uv에 Nexus 적용
+                    # export UV_DEFAULT_INDEX=http://nexus:8081/repository/pypi-proxy/simple
                     uv cache clean
                     uv sync
                     uv build
@@ -218,7 +225,7 @@ pipeline {
             steps {
                 sh '''
                     docker build \
-                        -t {프로젝트_명}-image:1.0.0 \
+                        -t {프로젝트_명}-image:"1.0.$BUILD_NUMBER" \
                         -t {프로젝트_명}-image:latest \
                         .
                 '''
@@ -231,6 +238,14 @@ pipeline {
                     docker run -d --name {프로젝트_명} -p 8000:8000 {프로젝트_명}-image:latest
                 '''
             }
+        }
+    }
+    post {
+        success {
+            echo "Deployment SUCCESS"
+        }
+        failure {
+            echo "Deployment FAILED"
         }
     }
 }
