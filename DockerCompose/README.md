@@ -237,3 +237,143 @@ pipeline {
 ```
 * `./jenkins_home/workspace/{폴더}/{파이프_명}`에 빌드된 파일 존재
 * `./jenkins_home/workspace/{폴더}/{파이프_명}@tmp`에 빌드된 필요한 Jenkins 파일 (빌드 후 삭제 됨)
+
+<!-- Pipeline 예시
+```groovy
+pipeline {
+    agent any
+
+    environment {
+        // Nexus
+        NEXUS_HOST = 'nexus:8082'
+        IMAGE_NAME = 'fastapi-project'
+
+        // Jenkins Build Number를 Docker Image Tag로 사용
+        IMAGE_TAG = "${BUILD_NUMBER}"
+
+        // Python package index
+        UV_DEFAULT_INDEX = 'http://nexus:8081/repository/pypi-proxy/simple'
+    }
+
+    stages {
+
+        // ==================================================
+        // 1. GitLab에서 소스 가져오기
+        // ==================================================
+        stage('Checkout') {
+            steps {
+                git(
+                    branch: 'main',
+                    url: 'http://gitlab:8929/CHOISEMIN/fastapi-project.git'
+                )
+            }
+        }
+
+        // ==================================================
+        // 2. Python dependency 설치 + wheel 생성
+        // ==================================================
+        stage('Build Python') {
+            steps {
+                sh '''
+                    echo "===== uv version ====="
+                    uv --version
+
+                    echo "===== uv sync ====="
+                    uv sync --frozen
+
+                    echo "===== uv build ====="
+                    uv build
+                '''
+            }
+        }
+
+        // ==================================================
+        // 3. Docker Image 생성
+        // ==================================================
+        stage('Docker Build') {
+            steps {
+                sh '''
+                    echo "===== Docker Build ====="
+
+                    docker build \
+                        -t ${NEXUS_HOST}/${IMAGE_NAME}:${IMAGE_TAG} \
+                        -t ${NEXUS_HOST}/${IMAGE_NAME}:latest \
+                        .
+                '''
+            }
+        }
+
+        // ==================================================
+        // 4. Nexus Docker Registry 로그인
+        // ==================================================
+        stage('Docker Push') {
+            steps {
+
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'nexus-docker',
+                        usernameVariable: 'NEXUS_USER',
+                        passwordVariable: 'NEXUS_PASSWORD'
+                    )
+                ]) {
+
+                    sh '''
+                        echo "===== Docker Login ====="
+
+                        echo "$NEXUS_PASSWORD" | \
+                            docker login ${NEXUS_HOST} \
+                            -u "$NEXUS_USER" \
+                            --password-stdin
+
+                        echo "===== Docker Push ====="
+
+                        docker push ${NEXUS_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
+                        docker push ${NEXUS_HOST}/${IMAGE_NAME}:latest
+                    '''
+                }
+            }
+        }
+
+        // ==================================================
+        // 5. 배포 서버에 배포
+        // ==================================================
+        stage('Deploy') {
+            steps {
+
+                sshagent(['deploy-server-ssh']) {
+
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no \
+                            deploy@deployment-server \
+                            "
+                                docker pull ${NEXUS_HOST}/${IMAGE_NAME}:${IMAGE_TAG} &&
+                                docker rm -f ${IMAGE_NAME} 2>/dev/null || true &&
+                                docker run -d \
+                                    --name ${IMAGE_NAME} \
+                                    -p 8000:8000 \
+                                    ${NEXUS_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
+                            "
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+
+        success {
+            echo "=================================="
+            echo "Deployment SUCCESS"
+            echo "Image: ${NEXUS_HOST}/${IMAGE_NAME}:${IMAGE_TAG}"
+            echo "=================================="
+        }
+
+        failure {
+            echo "=================================="
+            echo "Deployment FAILED"
+            echo "=================================="
+        }
+    }
+}
+```
+-->
