@@ -22,7 +22,7 @@ docker pull httpd
 docker rmi httpd
 ```
 
-## 설치된 아파치 Image를 바탕으로 컨테이너 생성
+### 설치된 아파치 Image를 바탕으로 컨테이너 생성
 ```sh
 # 모든 컨테이너 보기
 docker ps -a
@@ -47,6 +47,20 @@ docker start httpd1
 # 컨테이너 httpd1 삭제
 docker rm httpd1
 ```
+
+### 컨테이너 httpd1 쉘 명령
+* 기본 쉘은 `/bin/sh`, `/bin/bash` 등 다양하다.
+* `$PATH` 등의 환경 설정 추가는 `컨테이너 생성 명령` 또는 `Dockerfile` 파일에서 추가한다.
+```sh
+# ps 명령으로 쉘 확인
+docker exec httpd1 ps -p $$
+docker exec httpd1 ps -p $$ -o args=
+
+# ls 명령으로 쉘 확인
+docker exec httpd1 ls -l /bin/sh
+```
+* Docker Desktop > Containers > httpd1 > Exec (컨테이너의 기본 쉘로 터미널 연결)
+* [Oracle 쉘](https://github.com/ovdncids/mysql-curriculum/blob/master/Oracle.md)
 
 ## Tomcat
 ```sh
