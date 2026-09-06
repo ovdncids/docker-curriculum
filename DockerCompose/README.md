@@ -149,7 +149,13 @@ USER root
 RUN apt-get update \
     && apt-get install -y docker.io \
     && rm -rf /var/lib/apt/lists/*
+
+# `/var/run/docker.sock:/var/run/docker.sock` 호스트의 /var/run/docker.sock를 컨테이너가 그대로 쓴다. (permission denied 방지)
 RUN usermod -aG root jenkins
+
+# uv 설치
+# COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+
 USER jenkins
 ```
 ```yml
@@ -170,28 +176,42 @@ services:
 # `./`는 호스트의 경로를 쓴다. (docker-composes/{프로젝트}/jenkins_home) 따라서 아래는 불필요 하다.
 # volumes:
 #   jenkins_home:
-# `/var/run/docker.sock:/var/run/docker.sock` 호스트의 /var/run/docker.sock를 컨테이너가 그대로 쓴다. (권한: `RUN usermod -aG root jenkins`)
 ```
 ```sh
 # Jenkins가 호스트의 docker를 사용할 수 있는지 확인
 docker exec jenkins docker version
+
+# 1. 이미 Dockerfile에서 uv가 설치된 상황에서 uv 실행
+docker exec jenkins uv --version
+# 2. 컨테이너에 uv설치 (Pipeline에 `export PATH="$HOME/.local/bin:$PATH"` 추가해야 uv 사용 가능)
+docker exec jenkins curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 * http://localhost:8080
 * 플러그인 없이 설치
-* Jenkins 관리 > Plugins > Available plugins > `Folders Plugin`, `Pipeline`
+* Jenkins 관리 > Plugins > Available plugins > Pipeline > Install
 
 Pipeline Script
 ```groovy
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'http://gitlab:8929/{사용자}/{프로젝트_명}.git'
+            }
+        }
         stage('Build') {
             steps {
-                sh 'ps -p $$'
-                git branch: 'main', url: 'http://gitlab:8929/{사용자}/{프로젝트_명}.git'
+                sh '''
+                    export PATH="$HOME/.local/bin:$PATH"
+                    echo $PATH
+                    uv sync --frozen
+                    uv build
+                '''
             }
         }
     }
 }
 ```
 * `./jenkins_home/workspace/{폴더}/{파이프_명}`에 빌드된 파일 존재
+* `./jenkins_home/workspace/{폴더}/{파이프_명}@tmp`에 빌드된 필요한 Jenkins 파일 (빌드 후 삭제 됨)
