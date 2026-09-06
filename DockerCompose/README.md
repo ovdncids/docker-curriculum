@@ -214,6 +214,24 @@ pipeline {
                 '''
             }
         }
+        stage('Docker Image') {
+            steps {
+                sh '''
+                    docker build \
+                        -t {프로젝트_명}-image:1.0.0 \
+                        -t {프로젝트_명}-image:latest \
+                        .
+                '''
+            }
+        }
+        stage('Docker Container') {
+            steps {
+                sh '''
+                    docker rm -f {프로젝트_명} 2>/dev/null || true
+                    docker run -d --name {프로젝트_명} -p 8000:8000 {프로젝트_명}-image:latest
+                '''
+            }
+        }
     }
 }
 ```
