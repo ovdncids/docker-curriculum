@@ -188,7 +188,7 @@ docker exec jenkins curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 * http://localhost:8080
 * 플러그인 없이 설치
-* Jenkins 관리 > Plugins > Available plugins > Pipeline > Install
+* Jenkins 관리 > Plugins > Available plugins > Pipeline, Git > Install
 
 Pipeline Script
 ```groovy
